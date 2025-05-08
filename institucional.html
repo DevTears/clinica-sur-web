@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Institucional - Clínica Sur</title>
+
+  <!-- Fuentes -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS mediante CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary': '#0f4c81',
+            'secondary': '#3ca2a2',
+            'accent': '#e0f4f4',
+            'neutral': '#f5f5f7',
+          },
+          fontFamily: {
+            'sans': ['Montserrat', 'sans-serif'],
+            'body': ['Open Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js para interactividad -->
+  <script src="https://unpkg.com/alpinejs" defer></script>
+
+  <!-- AOS (Animate On Scroll) para animaciones al hacer scroll -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <!-- GSAP para animaciones avanzadas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+  <!-- Swiper para carruseles modernos -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+  <!-- Particles.js para fondos interactivos -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <style>
+    /* Estilos para animaciones personalizadas */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    /* Animación para línea del tiempo */
+    .timeline-point {
+      transition: all 0.5s ease;
+    }
+
+    .timeline-point:hover {
+      transform: scale(1.5);
+      background-color: var(--secondary);
+    }
+
+    .timeline-content {
+      transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Animación para tarjetas */
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Animación para iconos */
+    .icon-rotate {
+      transition: transform 0.5s ease;
+    }
+
+    .icon-rotate:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    /* Animación para valores */
+    .value-item {
+      transition: all 0.3s ease;
+    }
+
+    .value-item:hover svg {
+      transform: scale(1.2);
+      color: var(--secondary);
+    }
+
+    /* Animación para títulos */
+    .title-highlight {
+      position: relative;
+      display: inline-block;
+    }
+
+    .title-highlight::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 3px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--secondary);
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-out;
+    }
+
+    .title-highlight:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+
+    /* Animación para equipo médico */
+    .team-card {
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .team-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .team-card:hover .team-overlay {
+      opacity: 1;
+    }
+
+    .team-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 76, 129, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+
+<body class="font-body text-gray-800 bg-neutral">
+  <header class="bg-primary text-white shadow-md" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <a href="index.html" class="flex items-center space-x-2">
+          <div class="h-12 w-12 bg-white rounded-full flex items-center justify-center transform transition-transform hover:scale-110 duration-300 p-0 overflow-hidden">
+            <!-- Imagen del logo -->
+            <img src="/src/LogoClinicaSur.png" alt="Logo Clínica Sur" class="h-full w-full object-contain">
+          </div>
+          <div>
+            <h1 class="text-xl font-bold">Clínica Sur</h1>
+            <p class="text-xs text-accent">Malargüe, Mendoza</p>
+          </div>
+        </a>
+      </div>
+
+      <nav class="hidden md:block">
+        <ul class="flex space-x-6">
+          <li><a href="index.html"
+              class="hover:text-accent transition-colors relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-accent after:origin-bottom-right after:transition-transform hover:after:scale-x-100 hover:after:origin-bottom-left">Inicio</a>
+          </li>
+          <li><a href="institucional.html"
+              class="hover:text-accent transition-colors font-bold relative after:content-[''] after:absolute after:w-full after:scale-x-100 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-accent after:origin-bottom-right after:transition-transform">Institucional</a>
+          </li>
+          <li><a href="servicios.html"
+              class="hover:text-accent transition-colors relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-accent after:origin-bottom-right after:transition-transform hover:after:scale-x-100 hover:after:origin-bottom-left">Servicios</a>
+          </li>
+          <li><a href="medicina-laboral.html"
+              class="hover:text-accent transition-colors relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-accent after:origin-bottom-right after:transition-transform hover:after:scale-x-100 hover:after:origin-bottom-left">Medicina
+              Laboral</a></li>
+          <li><a href="contacto.html"
+              class="hover:text-accent transition-colors relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-accent after:origin-bottom-right after:transition-transform hover:after:scale-x-100 hover:after:origin-bottom-left">Contacto</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Menú móvil con Alpine.js -->
+      <div class="md:hidden" x-data="{open: false}">
+        <button @click="open = !open" class="text-white focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+
+        <div x-show="open" x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-95"
+          x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100 transform scale-100"
+          x-transition:leave-end="opacity-0 transform scale-95"
+          class="absolute top-20 right-4 bg-primary shadow-lg rounded-md py-2 px-4 z-10">
+          <ul class="space-y-2">
+            <li><a href="index.html" class="block hover:text-accent transition-colors">Inicio</a></li>
+            <li><a href="institucional.html"
+                class="block hover:text-accent transition-colors font-bold">Institucional</a></li>
+            <li><a href="servicios.html" class="block hover:text-accent transition-colors">Servicios</a></li>
+            <li><a href="medicina-laboral.html" class="block hover:text-accent transition-colors">Medicina Laboral</a>
+            </li>
+            <li><a href="contacto.html" class="block hover:text-accent transition-colors">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Banner institucional con partículas -->
+    <section class="bg-gradient-to-r from-primary to-secondary text-white py-16 relative overflow-hidden">
+      <div id="particles-js" class="absolute inset-0"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-3xl" data-aos="fade-right">
+          <h2 class="text-4xl font-bold mb-4">Nuestra Institución</h2>
+          <p class="text-lg">Conoce la historia y los valores que nos han convertido en un referente de la salud en
+            Malargüe y la región sur de Mendoza.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Historia con animaciones -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div data-aos="fade-right" data-aos-delay="100">
+            <h3 class="text-2xl font-bold mb-6 text-primary title-highlight">Nuestra Historia</h3>
+            <p class="mb-4">Clínica Sur nació en 1985 como un pequeño centro médico en la ciudad de Malargüe, con la
+              misión de brindar atención sanitaria de calidad a los habitantes de esta región del sur mendocino.</p>
+            <p class="mb-4">Lo que comenzó como un emprendimiento impulsado por un grupo de médicos comprometidos con la
+              comunidad, creció hasta convertirse en lo que hoy es una clínica integral con múltiples especialidades
+              médicas y equipamiento de última generación.</p>
+            <p>Durante más de 35 años, Clínica Sur ha sido testigo y protagonista del crecimiento de la región,
+              adaptándose a las necesidades cambiantes de la población y brindando respuestas efectivas a los desafíos
+              sanitarios de cada época.</p>
+          </div>
+          <div data-aos="fade-left" data-aos-delay="300"
+            class="bg-neutral rounded-lg p-6 shadow-md transform transition hover:scale-105 duration-300">
+            <div class="bg-accent/30 rounded-lg h-80 w-full flex items-center justify-center float">
+              <div class="text-primary text-xl font-semibold">Imagen histórica de la clínica</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Línea de tiempo animada -->
+        <div class="mt-16">
+          <h4 class="text-xl font-bold mb-8 text-primary text-center" data-aos="fade-up">Nuestra Trayectoria</h4>
+          <div class="relative">
+            <!-- Línea vertical -->
+            <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-accent"></div>
+
+            <!-- Eventos -->
+            <div class="space-y-12">
+              <!-- 1985 -->
+              <div class="relative flex md:items-center flex-col md:flex-row">
+                <div class="md:w-1/2 md:pr-8 mb-4 md:mb-0 md:text-right" data-aos="fade-right">
+                  <div class="bg-white p-4 rounded-lg shadow-md timeline-content">
+                    <h5 class="text-lg font-bold text-primary mb-2">1985</h5>
+                    <p>Fundación de Clínica Sur con un pequeño equipo de 5 médicos y 10 profesionales de la salud.</p>
+                  </div>
+                </div>
+                <div class="absolute hidden md:block left-1/2 transform -translate-x-1/2">
+                  <div class="w-8 h-8 rounded-full bg-primary border-4 border-accent timeline-point"></div>
+                </div>
+                <div class="md:w-1/2 md:pl-8"></div>
+              </div>
+
+              <!-- 1995 -->
+              <div class="relative flex md:items-center flex-col md:flex-row">
+                <div class="md:w-1/2 md:pr-8"></div>
+                <div class="absolute hidden md:block left-1/2 transform -translate-x-1/2">
+                  <div class="w-8 h-8 rounded-full bg-primary border-4 border-accent timeline-point"></div>
+                </div>
+                <div class="md:w-1/2 md:pl-8 mb-4 md:mb-0" data-aos="fade-left">
+                  <div class="bg-white p-4 rounded-lg shadow-md timeline-content">
+                    <h5 class="text-lg font-bold text-primary mb-2">1995</h5>
+                    <p>Primera ampliación importante: incorporación de nuevas especialidades médicas y modernización del
+                      equipamiento diagnóstico.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2005 -->
+              <div class="relative flex md:items-center flex-col md:flex-row">
+                <div class="md:w-1/2 md:pr-8 mb-4 md:mb-0 md:text-right" data-aos="fade-right">
+                  <div class="bg-white p-4 rounded-lg shadow-md timeline-content">
+                    <h5 class="text-lg font-bold text-primary mb-2">2005</h5>
+                    <p>Inauguración del nuevo edificio con mayor capacidad de internación y el primer tomógrafo de la
+                      región sur de Mendoza.</p>
+                  </div>
+                </div>
+                <div class="absolute hidden md:block left-1/2 transform -translate-x-1/2">
+                  <div class="w-8 h-8 rounded-full bg-primary border-4 border-accent timeline-point"></div>
+                </div>
+                <div class="md:w-1/2 md:pl-8"></div>
+              </div>
+
+              <!-- 2015 -->
+              <div class="relative flex md:items-center flex-col md:flex-row">
+                <div class="md:w-1/2 md:pr-8"></div>
+                <div class="absolute hidden md:block left-1/2 transform -translate-x-1/2">
+                  <div class="w-8 h-8 rounded-full bg-primary border-4 border-accent timeline-point"></div>
+                </div>
+                <div class="md:w-1/2 md:pl-8 mb-4 md:mb-0" data-aos="fade-left">
+                  <div class="bg-white p-4 rounded-lg shadow-md timeline-content">
+                    <h5 class="text-lg font-bold text-primary mb-2">2015</h5>
+                    <p>Creación del Centro de Medicina Laboral y ampliación del área de diagnóstico por imágenes.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2025 -->
+              <div class="relative flex md:items-center flex-col md:flex-row">
+                <div class="md:w-1/2 md:pr-8 mb-4 md:mb-0 md:text-right" data-aos="fade-right">
+                  <div class="bg-white p-4 rounded-lg shadow-md border-2 border-secondary timeline-content pulse">
+                    <h5 class="text-lg font-bold text-primary mb-2">2025</h5>
+                    <p>Actualidad: Una institución consolidada con más de 100 profesionales al servicio de la salud
+                      regional.</p>
+                  </div>
+                </div>
+                <div class="absolute hidden md:block left-1/2 transform -translate-x-1/2">
+                  <div class="w-8 h-8 rounded-full bg-secondary border-4 border-accent timeline-point"></div>
+                </div>
+                <div class="md:w-1/2 md:pl-8"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Misión, Visión y Valores con animaciones -->
+    <section class="py-16 bg-neutral">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-2xl font-bold mb-12 text-primary text-center" data-aos="fade-up">Misión, Visión y Valores</h3>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Misión -->
+          <div class="bg-white rounded-lg shadow-md p-8 relative card-hover" data-aos="fade-up" data-aos-delay="100">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+              <div class="bg-primary rounded-full p-4 icon-rotate">
+                <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+            </div>
+            <h4 class="text-xl font-bold mb-4 text-primary mt-4 text-center">Nuestra Misión</h4>
+            <p class="text-center">Brindar servicios de salud de excelencia, con calidez humana y compromiso social,
+              contribuyendo al bienestar de la comunidad de Malargüe y la región sur de Mendoza.</p>
+          </div>
+
+          <!-- Visión -->
+          <div class="bg-white rounded-lg shadow-md p-8 relative card-hover" data-aos="fade-up" data-aos-delay="300">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+              <div class="bg-primary rounded-full p-4 icon-rotate">
+                <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+            </div>
+            <h4 class="text-xl font-bold mb-4 text-primary mt-4 text-center">Nuestra Visión</h4>
+            <p class="text-center">Ser reconocidos como la institución de salud líder en el sur de Mendoza,
+              destacándonos por la calidad médica, la innovación tecnológica y la atención centrada en el paciente.</p>
+          </div>
+
+          <!-- Valores -->
+          <div class="bg-white rounded-lg shadow-md p-8 relative card-hover" data-aos="fade-up" data-aos-delay="500">
+            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
+              <div class="bg-primary rounded-full p-4 icon-rotate">
+                <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+            </div>
+            <h4 class="text-xl font-bold mb-4 text-primary mt-4 text-center">Nuestros Valores</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start value-item">
+                <svg class="h-5 w-5 text-secondary mr-2 mt-0.5 transition-all duration-300" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span><strong>Compromiso:</strong> Con la salud y bienestar de nuestros pacientes.</span>
+              </li>
+              <li class="flex items-start value-item">
+                <svg class="h-5 w-5 text-secondary mr-2 mt-0.5 transition-all duration-300" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span><strong>Excelencia:</strong> En cada servicio que brindamos.</span>
+              </li>
+              <li class="flex items-start value-item">
+                <svg class="h-5 w-5 text-secondary mr-2 mt-0.5 transition-all duration-300" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span><strong>Ética:</strong> En todas nuestras prácticas profesionales.</span>
+              </li>
+              <li class="flex items-start value-item">
+                <svg class="h-5 w-5 text-secondary mr-2 mt-0.5 transition-all duration-300" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span><strong>Respeto:</strong> Hacia cada persona que confía en nosotros.</span>
+              </li>
+              <li class="flex items-start value-item">
+                <svg class="h-5 w-5 text-secondary mr-2 mt-0.5 transition-all duration-300" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span><strong>Innovación:</strong> Constante búsqueda de mejoras.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Equipo Médico con efectos interactivos -->
+    <section class="py-16 bg-white" x-data="{activeTab: 'direccion'}">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-2xl font-bold mb-8 text-primary text-center" data-aos="fade-up">Nuestro Equipo Médico</h3>
+
+        <!-- Tabs con animaciones -->
+        <div class="flex flex-wrap justify-center mb-8 gap-2 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+          <button @click="activeTab = 'direccion'"
+            :class="{'bg-primary text-white': activeTab === 'direccion', 'bg-gray-100 text-gray-800': activeTab !== 'direccion'}"
+            class="px-4 py-2 rounded font-semibold transition-colors transform hover:scale-105 duration-300">
+            Dirección Médica
+          </button>
+          <button @click="activeTab = 'especialistas'"
+            :class="{'bg-primary text-white': activeTab === 'especialistas', 'bg-gray-100 text-gray-800': activeTab !== 'especialistas'}"
+            class="px-4 py-2 rounded font-semibold transition-colors transform hover:scale-105 duration-300">
+            Especialistas
+          </button>
+          <button @click="activeTab = 'enfermeria'"
+            :class="{'bg-primary text-white': activeTab === 'enfermeria', 'bg-gray-100 text-gray-800': activeTab !== 'enfermeria'}"
+            class="px-4 py-2 rounded font-semibold transition-colors transform hover:scale-105 duration-300">
+            Enfermería
+          </button>
+        </div>
+
+        <!-- Dirección Médica -->
+        <div x-show="activeTab === 'direccion'" x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-95"
+          x-transition:enter-end="opacity-100 transform scale-100">
+          <div class="grid md:grid-cols-3 gap-8">
+            <!-- Director Médico -->
+            <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card" data-aos="fade-up"
+              data-aos-delay="100">
+              <div class="bg-accent/30 h-64 flex items-center justify-center relative">
+                <div class="text-primary text-xl font-semibold">Foto Director Médico</div>
+                <div class="team-overlay">
+                  <div class="text-center p-4">
+                    <p class="text-white mb-2">"La medicina es vocación de servicio y compromiso con la excelencia."</p>
+                    <div class="flex justify-center space-x-2 mt-4">
+                      <a href="#" class="bg-white rounded-full p-2 hover:bg-accent transition-colors duration-300">
+                        <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                          <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                      </a>
+                      <a href="#" class="bg-white rounded-full p-2 hover:bg-accent transition-colors duration-300">
+                        <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                          <path
+                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-xl font-bold text-primary">Dr. Carlos Fernández</h4>
+                <p class="text-secondary font-semibold mb-2">Director Médico</p>
+                <p class="mb-4">Médico Cirujano con más de 25 años de experiencia. Especialista en Gestión Hospitalaria
+                  por la Universidad de Buenos Aires.</p>
+                <div class="flex space-x-2">
+                  <span class="px-2 py-1 bg-accent text-primary text-xs rounded-full">Cirugía</span>
+                  <span class="px-2 py-1 bg-accent text-primary text-xs rounded-full">Gestión</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Subdirector Clínico -->
+            <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card" data-aos="fade-up"
+              data-aos-delay="200">
+              <div class="bg-accent/30 h-64 flex items-center justify-center relative">
+                <div class="text-primary text-xl font-semibold">Foto Subdirectora Clínica</div>
+                <div class="team-overlay">
+                  <div class="text-center p-4">
+                    <p class="text-white mb-2">"La salud pública y la prevención son pilares fundamentales de nuestra
+                      labor."</p>
+                    <div class="flex justify-center space-x-2 mt-4">
+                      <a href="#" class="bg-white rounded-full p-2 hover:bg-accent transition-colors duration-300">
+                        <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                          <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                      </a>
+                      <a href="#" class="bg-white rounded-full p-2 hover:bg-accent transition-colors duration-300">
+                        <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                          <path
+                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-xl font-bold text-primary">Dra. Laura Méndez</h4>
+                <p class="text-secondary font-semibold mb-2">Subdirectora Clínica</p>
+                <p class="mb-4">Médica especialista en Clínica Médica y Medicina Interna. Magister en Salud Pública por
+                  la Universidad Nacional de Cuyo.</p>
+                <div class="flex space-x-2">
+                  <span class="px-2 py-1 bg-accent text-primary text-xs rounded-full">Medicina Interna</span>
+                  <span class="px-2 py-1 bg-accent text-primary text-xs rounded-full">Epidemiología</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Coordinador de Servicios -->
+            <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card" data-aos="fade-up"
+              data-aos-delay="300">
+              <div class="bg-accent/30 h-64 flex items-center justify-center relative">
+                <div class="text-primary text-xl font-semibold">Foto Coordinador</div>
+                <div class="team-overlay">
+                  <div class="text-center p-4">
+                    <p class="text-white mb-2">"La coordinación efectiva entre especialidades es clave para una atención
+                      integral."</p>
+                    <div class="flex justify-center space-x-2 mt-4">
+                      <a href="#" class="bg-white rounded-full p-2 hover:bg-accent transition-colors duration-300">
+                        <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                          <path
+                            d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                      </a>
+                      <a href="#" class="bg-white rounded-full p-2 hover:bg-accent transition-colors duration-300">
+                        <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                          <path
+                            d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-xl font-bold text-primary">Dr. Martín González</h4>
+                <p class="text-secondary font-semibold mb-2">Coordinador de Servicios</p>
+                <p class="mb-4">Especialista en Emergentología y Gestión de Servicios Médicos. Responsable de la
+                  coordinación entre áreas de la clínica.</p>
+                <div class="flex space-x-2">
+                  <span class="px-2 py-1 bg-accent text-primary text-xs rounded-full">Emergencias</span>
+                  <span class="px-2 py-1 bg-accent text-primary text-xs rounded-full">Coordinación</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Especialistas con efecto Swiper -->
+        <div x-show="activeTab === 'especialistas'" x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-95"
+          x-transition:enter-end="opacity-100 transform scale-100" class="relative">
+          <!-- Añadido position relative para contener correctamente el carrusel y botones -->
+          <div class="swiper-container especialistas-swiper overflow-hidden">
+            <!-- Añadido overflow-hidden para evitar scroll lateral -->
+            <div class="swiper-wrapper pb-10">
+              <!-- Especialista 1 -->
+              <div class="swiper-slide">
+                <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card h-full">
+                  <div class="bg-accent/20 h-48 flex items-center justify-center relative">
+                    <div class="text-primary font-semibold">Foto</div>
+                    <div class="team-overlay">
+                      <div class="text-center p-4">
+                        <p class="text-white text-sm">Especializada en cardiología preventiva y rehabilitación cardíaca.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <h4 class="text-lg font-bold text-primary">Dra. Ana Martinez</h4>
+                    <p class="text-secondary font-semibold mb-1">Cardiología</p>
+                    <p class="text-sm">Especialista en enfermedades cardiovasculares y cardiología intervencionista.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Especialista 2 -->
+              <div class="swiper-slide">
+                <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card h-full">
+                  <div class="bg-accent/20 h-48 flex items-center justify-center relative">
+                    <div class="text-primary font-semibold">Foto</div>
+                    <div class="team-overlay">
+                      <div class="text-center p-4">
+                        <p class="text-white text-sm">Experiencia en tratamiento de lesiones deportivas complejas.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <h4 class="text-lg font-bold text-primary">Dr. Roberto Sánchez</h4>
+                    <p class="text-secondary font-semibold mb-1">Traumatología</p>
+                    <p class="text-sm">Especializado en lesiones deportivas y cirugía artroscópica.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Especialista 3 -->
+              <div class="swiper-slide">
+                <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card h-full">
+                  <div class="bg-accent/20 h-48 flex items-center justify-center relative">
+                    <div class="text-primary font-semibold">Foto</div>
+                    <div class="team-overlay">
+                      <div class="text-center p-4">
+                        <p class="text-white text-sm">Dedicado al desarrollo neurológico y crecimiento infantil.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <h4 class="text-lg font-bold text-primary">Dr. Gabriel Rodríguez</h4>
+                    <p class="text-secondary font-semibold mb-1">Pediatría</p>
+                    <p class="text-sm">Pediatra con especialización en neonatología y desarrollo infantil.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Especialista 4 -->
+              <div class="swiper-slide">
+                <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card h-full">
+                  <div class="bg-accent/20 h-48 flex items-center justify-center relative">
+                    <div class="text-primary font-semibold">Foto</div>
+                    <div class="team-overlay">
+                      <div class="text-center p-4">
+                        <p class="text-white text-sm">Experta en salud reproductiva y ginecología preventiva.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <h4 class="text-lg font-bold text-primary">Dra. Silvia López</h4>
+                    <p class="text-secondary font-semibold mb-1">Ginecología</p>
+                    <p class="text-sm">Especialista en salud femenina y obstetricia de alto riesgo.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Especialista 5 -->
+              <div class="swiper-slide">
+                <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card h-full">
+                  <div class="bg-accent/20 h-48 flex items-center justify-center relative">
+                    <div class="text-primary font-semibold">Foto</div>
+                    <div class="team-overlay">
+                      <div class="text-center p-4">
+                        <p class="text-white text-sm">Investigación en trastornos del sueño y cefaleas crónicas.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <h4 class="text-lg font-bold text-primary">Dr. Javier Romero</h4>
+                    <p class="text-secondary font-semibold mb-1">Neurología</p>
+                    <p class="text-sm">Especializado en trastornos neurológicos y medicina del sueño.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Especialista 6 -->
+              <div class="swiper-slide">
+                <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card h-full">
+                  <div class="bg-accent/20 h-48 flex items-center justify-center relative">
+                    <div class="text-primary font-semibold">Foto</div>
+                    <div class="team-overlay">
+                      <div class="text-center p-4">
+                        <p class="text-white text-sm">Especialista en tratamientos dermatológicos avanzados.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <h4 class="text-lg font-bold text-primary">Dra. María Gutiérrez</h4>
+                    <p class="text-secondary font-semibold mb-1">Dermatología</p>
+                    <p class="text-sm">Especialista en dermatología clínica y procedimientos estéticos mínimamente
+                      invasivos.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Especialista 7 -->
+              <div class="swiper-slide">
+                <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card h-full">
+                  <div class="bg-accent/20 h-48 flex items-center justify-center relative">
+                    <div class="text-primary font-semibold">Foto</div>
+                    <div class="team-overlay">
+                      <div class="text-center p-4">
+                        <p class="text-white text-sm">Pionero en nuevas técnicas quirúrgicas oftalmológicas.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-4">
+                    <h4 class="text-lg font-bold text-primary">Dr. Eduardo Torres</h4>
+                    <p class="text-secondary font-semibold mb-1">Oftalmología</p>
+                    <p class="text-sm">Especializado en cirugía de cataratas y tratamiento de enfermedades retinianas.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones de navegación fuera del contenedor swiper pero dentro del div relativo -->
+          <div
+            class="swiper-button-prev hidden md:flex text-primary absolute top-1/2 left-0 z-10 transform -translate-y-1/2">
+          </div>
+          <div
+            class="swiper-button-next hidden md:flex text-primary absolute top-1/2 right-0 z-10 transform -translate-y-1/2">
+          </div>
+
+          <div class="mt-2 text-center">
+            <a href="#"
+              class="text-primary font-semibold hover:underline inline-flex items-center group transition-all duration-300">
+              Ver equipo completo
+              <svg class="h-4 w-4 ml-1 transform transition-transform group-hover:translate-x-2" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Enfermería -->
+        <div x-show="activeTab === 'enfermeria'" x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 transform scale-95"
+          x-transition:enter-end="opacity-100 transform scale-100">
+          <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h4 class="text-xl font-bold mb-4 text-primary">Departamento de Enfermería</h4>
+            <p class="mb-4">Nuestro equipo de enfermería está compuesto por más de 30 profesionales altamente
+              calificados, con formación específica en las distintas áreas de atención hospitalaria.</p>
+            <p>El cuidado humanizado, la capacitación permanente y el trabajo en equipo son los pilares fundamentales de
+              nuestro servicio de enfermería, que brinda atención las 24 horas del día a todos nuestros pacientes.</p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6">
+            <!-- Jefa de Enfermería -->
+            <div class="bg-neutral rounded-lg overflow-hidden shadow-md team-card">
+              <div class="bg-accent/30 h-56 flex items-center justify-center relative">
+                <div class="text-primary text-xl font-semibold">Foto Jefa de Enfermería</div>
+                <div class="team-overlay">
+                  <div class="text-center p-4">
+                    <p class="text-white mb-2">"El cuidado con calidez humana es tan importante como la excelencia
+                      técnica."</p>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6">
+                <h4 class="text-xl font-bold text-primary">Lic. Carmen Díaz</h4>
+                <p class="text-secondary font-semibold mb-2">Jefa de Enfermería</p>
+                <p>Licenciada en Enfermería con especialización en Gestión y Administración de Servicios de Enfermería.
+                  Más de 20 años de experiencia en el campo hospitalario.</p>
+              </div>
+            </div>
+
+            <!-- Especialidades de Enfermería -->
+            <div class="md:col-span-2">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-secondary card-hover">
+                  <h5 class="font-bold text-primary mb-2">Enfermería en Cuidados Críticos</h5>
+                  <p class="text-sm">Profesionales especializados en el manejo de pacientes críticos y situaciones de
+                    emergencia.</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-secondary card-hover">
+                  <h5 class="font-bold text-primary mb-2">Enfermería Clínica</h5>
+                  <p class="text-sm">Atención integral a pacientes internados en las áreas de hospitalización general.
+                  </p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-secondary card-hover">
+                  <h5 class="font-bold text-primary mb-2">Enfermería Quirúrgica</h5>
+                  <p class="text-sm">Asistencia especializada en quirófano y recuperación posquirúrgica.</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-secondary card-hover">
+                  <h5 class="font-bold text-primary mb-2">Enfermería Pediátrica</h5>
+                  <p class="text-sm">Cuidados específicos para pacientes pediátricos en todas las etapas del desarrollo.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- Instalaciones con animaciones -->
+    <section class="py-16 bg-neutral">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-2xl font-bold mb-12 text-primary text-center" data-aos="fade-up">Nuestras Instalaciones</h3>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover" data-aos="fade-right"
+            data-aos-delay="100">
+            <div class="bg-accent/30 h-64 flex items-center justify-center">
+              <div class="text-primary text-xl font-semibold">Imagen área de internación</div>
+            </div>
+            <div class="p-6">
+              <h4 class="text-xl font-bold text-primary mb-2">Área de Internación</h4>
+              <p>Contamos con habitaciones privadas y compartidas, todas equipadas con tecnología moderna para
+                monitorización y atención de pacientes. Nuestras instalaciones están diseñadas para brindar comodidad y
+                seguridad durante la estancia hospitalaria.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover" data-aos="fade-left"
+            data-aos-delay="300">
+            <div class="bg-accent/30 h-64 flex items-center justify-center">
+              <div class="text-primary text-xl font-semibold">Imagen quirófanos</div>
+            </div>
+            <div class="p-6">
+              <h4 class="text-xl font-bold text-primary mb-2">Quirófanos</h4>
+              <p>Disponemos de quirófanos equipados con la más moderna tecnología para procedimientos quirúrgicos de
+                diversa complejidad. Nuestros sistemas de esterilización y control garantizan los más altos estándares
+                de seguridad para los pacientes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover" data-aos="fade-up" data-aos-delay="100">
+            <div class="bg-accent/30 h-48 flex items-center justify-center">
+              <div class="text-primary text-lg font-semibold">Laboratorio</div>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-bold text-primary mb-2">Laboratorio</h4>
+              <p class="text-sm">Equipamiento de última generación para análisis clínicos precisos y rápidos.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover" data-aos="fade-up" data-aos-delay="200">
+            <div class="bg-accent/30 h-48 flex items-center justify-center">
+              <div class="text-primary text-lg font-semibold">Diagnóstico por imágenes</div>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-bold text-primary mb-2">Diagnóstico por Imágenes</h4>
+              <p class="text-sm">Tecnología moderna para radiografías, ecografías, tomografía computada y más.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover" data-aos="fade-up" data-aos-delay="300">
+            <div class="bg-accent/30 h-48 flex items-center justify-center">
+              <div class="text-primary text-lg font-semibold">Consultorios</div>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-bold text-primary mb-2">Consultorios Externos</h4>
+              <p class="text-sm">Espacios confortables para la atención ambulatoria de diversas especialidades médicas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificaciones y Reconocimientos con animaciones -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-2xl font-bold mb-12 text-primary text-center" data-aos="fade-up">Certificaciones y
+          Reconocimientos</h3>
+
+        <div class="grid md:grid-cols-2 gap-10 items-center mb-10">
+          <div data-aos="fade-right" data-aos-delay="100">
+            <p class="mb-6">En Clínica Sur nos esforzamos constantemente por mantener y mejorar nuestros estándares de
+              calidad. Nuestro compromiso con la excelencia ha sido reconocido por diversas instituciones nacionales e
+              internacionales.</p>
+            <p>Estas certificaciones no solo avalan nuestra calidad asistencial, sino que también representan nuestro
+              compromiso permanente con la mejora continua y la seguridad del paciente.</p>
+          </div>
+
+          <div class="bg-neutral p-6 rounded-lg shadow-md transform transition hover:scale-105 duration-300"
+            data-aos="fade-left" data-aos-delay="300">
+            <div class="bg-accent/30 rounded-lg h-64 w-full flex items-center justify-center float">
+              <div class="text-primary text-xl font-semibold">Imagen de certificaciones</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificaciones con animaciones -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <!-- Certificación 1 -->
+          <div class="text-center" data-aos="zoom-in" data-aos-delay="100">
+            <div
+              class="mx-auto bg-neutral rounded-full w-24 h-24 flex items-center justify-center mb-4 shadow-md transform transition-all duration-500 hover:scale-110 pulse">
+              <div class="text-primary text-3xl font-bold">ISO</div>
+            </div>
+            <h4 class="font-bold text-primary">ISO 9001</h4>
+            <p class="text-sm mt-2">Certificación en Sistemas de Gestión de Calidad</p>
+          </div>
+
+          <!-- Certificación 2 -->
+          <div class="text-center" data-aos="zoom-in" data-aos-delay="200">
+            <div
+              class="mx-auto bg-neutral rounded-full w-24 h-24 flex items-center justify-center mb-4 shadow-md transform transition-all duration-500 hover:scale-110 pulse">
+              <div class="text-primary text-3xl font-bold">JCI</div>
+            </div>
+            <h4 class="font-bold text-primary">Joint Commission</h4>
+            <p class="text-sm mt-2">Acreditación en Seguridad del Paciente</p>
+          </div>
+
+          <!-- Certificación 3 -->
+          <div class="text-center" data-aos="zoom-in" data-aos-delay="300">
+            <div
+              class="mx-auto bg-neutral rounded-full w-24 h-24 flex items-center justify-center mb-4 shadow-md transform transition-all duration-500 hover:scale-110 pulse">
+              <div class="text-primary text-2xl font-bold">ITAES</div>
+            </div>
+            <h4 class="font-bold text-primary">ITAES</h4>
+            <p class="text-sm mt-2">Instituto Técnico para la Acreditación de Establecimientos de Salud</p>
+          </div>
+
+          <!-- Certificación 4 -->
+          <div class="text-center" data-aos="zoom-in" data-aos-delay="400">
+            <div
+              class="mx-auto bg-neutral rounded-full w-24 h-24 flex items-center justify-center mb-4 shadow-md transform transition-all duration-500 hover:scale-110 pulse">
+              <div class="text-primary text-3xl font-bold">MSP</div>
+            </div>
+            <h4 class="font-bold text-primary">Ministerio de Salud</h4>
+            <p class="text-sm mt-2">Reconocimiento a la Excelencia en Atención Sanitaria</p>
+          </div>
+        </div>
+
+        <!-- Premios y reconocimientos con timeline horizontal -->
+        <div class="mt-16" data-aos="fade-up">
+          <h4 class="text-xl font-bold mb-8 text-primary text-center">Premios y Reconocimientos</h4>
+
+          <div class="relative">
+            <!-- Línea horizontal -->
+            <div class="hidden md:block absolute top-16 left-0 right-0 h-1 bg-accent"></div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+              <!-- Premio 1 -->
+              <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="relative">
+                  <div
+                    class="mx-auto bg-primary rounded-full w-12 h-12 flex items-center justify-center mb-2 z-10 relative icon-rotate">
+                    <span class="text-white font-bold">2015</span>
+                  </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md mt-4 card-hover">
+                  <h5 class="font-bold text-primary mb-2">Premio a la Innovación Médica</h5>
+                  <p class="text-sm">Otorgado por la Asociación Médica de Mendoza por nuestro programa de telemedicina
+                    rural.</p>
+                </div>
+              </div>
+
+              <!-- Premio 2 -->
+              <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="relative">
+                  <div
+                    class="mx-auto bg-primary rounded-full w-12 h-12 flex items-center justify-center mb-2 z-10 relative icon-rotate">
+                    <span class="text-white font-bold">2018</span>
+                  </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md mt-4 card-hover">
+                  <h5 class="font-bold text-primary mb-2">Mención de Honor</h5>
+                  <p class="text-sm">Reconocimiento del Gobierno de Mendoza por nuestro programa de atención comunitaria
+                    en zonas rurales.</p>
+                </div>
+              </div>
+
+              <!-- Premio 3 -->
+              <div class="text-center" data-aos="fade-up" data-aos-delay="500">
+                <div class="relative">
+                  <div
+                    class="mx-auto bg-secondary rounded-full w-12 h-12 flex items-center justify-center mb-2 z-10 relative icon-rotate">
+                    <span class="text-white font-bold">2023</span>
+                  </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md mt-4 card-hover">
+                  <h5 class="font-bold text-primary mb-2">Premio Excelencia Sanitaria</h5>
+                  <p class="text-sm">Otorgado por la Sociedad Argentina de Salud Pública por nuestro modelo de gestión
+                    hospitalaria.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call To Action -->
+    <section class="py-16 bg-gradient-to-r from-primary to-secondary text-white relative overflow-hidden">
+      <div class="absolute inset-0 bg-opacity-20 bg-black"></div>
+      <div id="particles-cta" class="absolute inset-0"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <h3 class="text-3xl font-bold mb-6" data-aos="zoom-in">Comprometidos con su salud</h3>
+        <p class="text-xl mb-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">Nuestra historia, valores y
+          equipo humano están al servicio de la comunidad de Malargüe y la región sur de Mendoza.</p>
+        <div data-aos="fade-up" data-aos-delay="400">
+          <a href="contacto.html"
+            class="bg-white text-primary px-8 py-3 rounded-md font-bold transition-all duration-300 hover:bg-opacity-90 hover:shadow-lg hover:scale-105 transform inline-block">Contáctenos</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-primary text-white py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Clínica Sur</h3>
+          <p class="mb-2">Sirviendo a la comunidad de Malargüe con excelencia médica.</p>
+          <p>© 2025 Clínica Sur. Todos los derechos reservados.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">Contacto</h3>
+          <p class="mb-2">Dirección: Av. Principal 123, Malargüe, Mendoza</p>
+          <p class="mb-2">Teléfono: (123) 456-7890</p>
+          <p>Email: contacto@clinicasur.com.ar</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">Horarios</h3>
+          <p class="mb-2">Atención administrativa: Lunes a Viernes 8:00 - 18:00</p>
+          <p>Guardia médica: 24 horas, todos los días</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Inicializar AOS (Animate On Scroll)
+    AOS.init({
+      duration: 800,
+      once: false,
+      mirror: true,
+      offset: 120,
+      easing: 'ease-in-out'
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Animación del header con GSAP
+      gsap.from("#navbar", {
+        y: -100,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+      });
+
+      // Inicializar Particles.js para el fondo del hero
+      if (document.getElementById('particles-js')) {
+        particlesJS('particles-js', {
+          particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            opacity: { value: 0.5, random: false },
+            size: { value: 3, random: true },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: "#ffffff",
+              opacity: 0.4,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 2,
+              direction: "none",
+              random: false,
+              straight: false,
+              out_mode: "out",
+              bounce: false
+            }
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "repulse" },
+              onclick: { enable: true, mode: "push" }
+            }
+          }
+        });
+      }
+
+      // Inicializar particles para CTA
+      if (document.getElementById('particles-cta')) {
+        particlesJS('particles-cta', {
+          particles: {
+            number: { value: 40, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            opacity: { value: 0.3, random: false },
+            size: { value: 2, random: true },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: "#ffffff",
+              opacity: 0.2,
+              width: 1
+            },
+            move: {
+              enable: true,
+              speed: 1,
+              direction: "none",
+              random: true,
+              straight: false,
+              out_mode: "out",
+              bounce: false
+            }
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "bubble" },
+              onclick: { enable: true, mode: "push" }
+            }
+          }
+        });
+      }
+
+      // Inicializar Swiper para especialistas
+      if (document.querySelector('.especialistas-swiper')) {
+        new Swiper('.especialistas-swiper', {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          loop: true,
+          autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+          breakpoints: {
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 20,
+            },
+          },
+        });
+      }
+
+      // Animación para línea de tiempo
+      gsap.to(".timeline-point", {
+        scrollTrigger: {
+          trigger: ".timeline-point",
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse"
+        },
+        scale: 1.2,
+        duration: 0.5,
+        stagger: 0.2,
+        ease: "back.out(1.7)"
+      });
+
+      console.log('Clínica Sur - Página institucional cargada con animaciones');
+    });
+  </script>
+</body>
+
+</html>
